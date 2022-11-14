@@ -131,7 +131,12 @@ function buyButtonClick(event, data) {
 function tick(data) {
   data.coffee += data.totalCPS;
   updateCoffeeView(data.coffee);
+  updateCPSView(data.totalCPS);
   renderProducers(data);
+}
+
+function saveData(data) {
+  localStorage.setItem('savedGameData', JSON.stringify(data));
 }
 
 /*************************
@@ -151,6 +156,8 @@ function tick(data) {
 if (typeof process === 'undefined') {
   // Get starting data from the window object
   // (This comes from data.js)
+
+
   const data = window.data;
 
   // Add an event listener to the giant coffee emoji
@@ -166,6 +173,7 @@ if (typeof process === 'undefined') {
 
   // Call the tick function passing in the data object once per second
   setInterval(() => tick(data), 1000);
+  setInterval(() => saveData(data), 1000);
 }
 
 
